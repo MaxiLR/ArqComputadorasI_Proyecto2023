@@ -2,10 +2,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
+
+// CONSTANTS
 #define PASSWORD "12345"
 #define QUIT_KEY 'q'
+#define DELAY_INTERVAL 250
+#define DEFAULT_DELAY 1000
 
-void Delay(unsigned long int a) {
+unsigned int QUIT;
+size_t DELAY = DEFAULT_DELAY;
+
+void Delay(size_t a) {
   a = a * 100000;
   while (a--)
     ;
@@ -68,34 +76,39 @@ void DisplayBinary(unsigned char DISPLAY) {
   printf("\n");
 }
 
-// unsigned int keyListener(unsigned int Kbhit, unsigned long int DELAY) {
-//   if (Kbhit) {
-//     char key = getch();
-//     if (key == QUIT_KEY)
-//       return 1;
-//     if (key == 0 || key == -32) {
-//       char flecha = getch();
-//       if (flecha == 72) {
-//         DELAY += 1000;
-//       } else if (flecha == 80) {
-//         DELAY -= 1000;
-//       }
-//     }
-//     return 0;
-//   }
-// }
+DWORD WINAPI keyListener() {
+  while (!QUIT) {
+    if (kbhit()) {
+      char key = getch();
+      if (key == QUIT_KEY)
+        QUIT = 1;
+      else if (key == 0 || key == -32) {
+        char arrow = getch();
+        if (arrow == 72) {
+          if (DELAY - DELAY_INTERVAL != 0)
+            DELAY -= DELAY_INTERVAL;
+        } else if (arrow == 80) {
+          DELAY += DELAY_INTERVAL;
+        }
+      }
+    }
+  }
+}
 
-void AutoFantastico() {
+DWORD WINAPI AutoFantastico() {
   system("CLS");
-  unsigned long int DELAY = 1000;
-  while (1) {
+  while (!QUIT) {
     unsigned char DISPLAY = 0x80;
     for (int i = 0; i < 7; i++) {
+      if (QUIT)
+        break;
       DisplayBinary(DISPLAY);
       DISPLAY = DISPLAY >> 1;
       Delay(DELAY);
     }
     for (int i = 0; i < 7; i++) {
+      if (QUIT)
+        break;
       DisplayBinary(DISPLAY);
       DISPLAY = DISPLAY << 1;
       Delay(DELAY);
@@ -103,16 +116,17 @@ void AutoFantastico() {
   }
 }
 
-void ElChoque() {
+DWORD WINAPI ElChoque() {
   system("CLS");
-  unsigned long int DELAY = 1000;
-  while (1) {
+  while (!QUIT) {
     unsigned char SUB_DISPLAY_1 = 0x80;
     unsigned char SUB_DISPLAY_2 = 0x01;
     unsigned char DISPLAY = 0;
 
     for (int i = 0; i < 7; i++) {
       DISPLAY = SUB_DISPLAY_1 + SUB_DISPLAY_2;
+      if (QUIT)
+        break;
       DisplayBinary(DISPLAY);
       SUB_DISPLAY_1 = SUB_DISPLAY_1 >> 1;
       SUB_DISPLAY_2 = SUB_DISPLAY_2 << 1;
@@ -121,37 +135,40 @@ void ElChoque() {
   }
 }
 
-void ElRebote() {
+DWORD WINAPI ElRebote() {
   system("CLS");
-  unsigned long int DELAY = 1000;
-  while (1) {
+  while (!QUIT) {
     unsigned char DISPLAY = 0x80;
 
     for (int r = 7; r > 0; r--) {
       for (DISPLAY; DISPLAY != 0b1; DISPLAY = DISPLAY >> 1) {
+        if (QUIT)
+          break;
         DisplayBinary(DISPLAY);
         Delay(DELAY);
       }
       for (int j = 0; j < r - 1; j++) {
+        if (QUIT)
+          break;
         DisplayBinary(DISPLAY);
         DISPLAY = DISPLAY << 1;
         Delay(DELAY);
       }
     }
+    if (QUIT)
+      break;
     DisplayBinary(DISPLAY);
     Delay(DELAY);
   }
 }
 
-void ElEspiral() {
+DWORD WINAPI ElEspiral() {
   system("CLS");
-  unsigned long int DELAY = 1000;
-
   unsigned char DISPLAY = 0;
 
   DisplayBinary(DISPLAY);
 
-  while (1) {
+  while (!QUIT) {
     unsigned char SUB_DISPLAY_1 = 0x80;
     unsigned char SUB_DISPLAY_2 = 0x01;
     DISPLAY = 0;
@@ -159,52 +176,66 @@ void ElEspiral() {
     for (int i = 0; i < 4; i++) {
       DISPLAY += SUB_DISPLAY_1;
       SUB_DISPLAY_1 = SUB_DISPLAY_1 >> 1;
+      if (QUIT)
+        break;
       DisplayBinary(DISPLAY);
       Delay(DELAY);
       DISPLAY += SUB_DISPLAY_2;
       SUB_DISPLAY_2 = SUB_DISPLAY_2 << 1;
+      if (QUIT)
+        break;
       DisplayBinary(DISPLAY);
       Delay(DELAY);
     }
     for (int i = 0; i < 4; i++) {
       DISPLAY -= SUB_DISPLAY_2;
       SUB_DISPLAY_2 = SUB_DISPLAY_2 << 1;
+      if (QUIT)
+        break;
       DisplayBinary(DISPLAY);
       Delay(DELAY);
       DISPLAY -= SUB_DISPLAY_1;
       SUB_DISPLAY_1 = SUB_DISPLAY_1 >> 1;
+      if (QUIT)
+        break;
       DisplayBinary(DISPLAY);
       Delay(DELAY);
     }
   }
 }
 
-void ElCaos() {
+DWORD WINAPI ElCaos() {
   system("CLS");
-  unsigned long int DELAY = 1000;
-
   unsigned char DISPLAY = 0;
-  while (1) {
+  while (!QUIT) {
     unsigned char SUB_DISPLAY_1 = 0x80;
     unsigned char SUB_DISPLAY_2 = 0x01;
 
     for (int i = 0; i < 4; i++) {
       DISPLAY += SUB_DISPLAY_1;
       SUB_DISPLAY_1 = SUB_DISPLAY_1 >> 1;
+      if (QUIT)
+        break;
       DisplayBinary(DISPLAY);
       Delay(DELAY);
       DISPLAY += SUB_DISPLAY_2;
       SUB_DISPLAY_2 = SUB_DISPLAY_2 << 1;
+      if (QUIT)
+        break;
       DisplayBinary(DISPLAY);
       Delay(DELAY);
     }
     for (int i = 0; i < 4; i++) {
       DISPLAY -= SUB_DISPLAY_2;
       SUB_DISPLAY_2 = SUB_DISPLAY_2 >> 1;
+      if (QUIT)
+        break;
       DisplayBinary(DISPLAY);
       Delay(DELAY);
       DISPLAY -= SUB_DISPLAY_1;
       SUB_DISPLAY_1 = SUB_DISPLAY_1 << 1;
+      if (QUIT)
+        break;
       DisplayBinary(DISPLAY);
       Delay(DELAY);
     }
@@ -227,8 +258,10 @@ void App() {
 
   do {
     Delay(2000);
-    // DisplayBinary(0);
+    DisplayBinary(0);
     system("CLS");
+    QUIT = 0;
+    DELAY = DEFAULT_DELAY;
 
     printf("------ S E C U E N C I A S  D E  L U C E S ------\n");
     printf("1. Auto Fantastico\n");
@@ -242,21 +275,44 @@ void App() {
 
     scanf("%d", &option);
 
+    HANDLE threads[2];
+    DWORD threadIds[2];
     switch (option) {
     case 1:
-      AutoFantastico();
+      threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
+      threads[1] =
+          CreateThread(NULL, 0, AutoFantastico, NULL, 0, &threadIds[1]);
+      WaitForMultipleObjects(2, threads, TRUE, INFINITE);
+      CloseHandle(threads[0]);
+      CloseHandle(threads[1]);
       break;
     case 2:
-      ElChoque();
+      threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
+      threads[1] = CreateThread(NULL, 0, ElChoque, NULL, 0, &threadIds[1]);
+      WaitForMultipleObjects(2, threads, TRUE, INFINITE);
+      CloseHandle(threads[0]);
+      CloseHandle(threads[1]);
       break;
     case 3:
-      ElRebote();
+      threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
+      threads[1] = CreateThread(NULL, 0, ElRebote, NULL, 0, &threadIds[1]);
+      WaitForMultipleObjects(2, threads, TRUE, INFINITE);
+      CloseHandle(threads[0]);
+      CloseHandle(threads[1]);
       break;
     case 4:
-      ElEspiral();
+      threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
+      threads[1] = CreateThread(NULL, 0, ElEspiral, NULL, 0, &threadIds[1]);
+      WaitForMultipleObjects(2, threads, TRUE, INFINITE);
+      CloseHandle(threads[0]);
+      CloseHandle(threads[1]);
       break;
     case 5:
-      ElCaos();
+      threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
+      threads[1] = CreateThread(NULL, 0, ElCaos, NULL, 0, &threadIds[1]);
+      WaitForMultipleObjects(2, threads, TRUE, INFINITE);
+      CloseHandle(threads[0]);
+      CloseHandle(threads[1]);
       break;
     case 0:
       printf("\nSaliendo del programa...\n");
