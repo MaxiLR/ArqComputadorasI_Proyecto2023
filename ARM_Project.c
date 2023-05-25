@@ -261,7 +261,7 @@ void App() {
     DisplayBinary(0);
     system("CLS");
     QUIT = 0;
-    DELAY = DEFAULT_DELAY;
+    // DELAY = DEFAULT_DELAY;
 
     printf("------ S E C U E N C I A S  D E  L U C E S ------\n");
     printf("1. Auto Fantastico\n");
