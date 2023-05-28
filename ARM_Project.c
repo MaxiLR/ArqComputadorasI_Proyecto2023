@@ -260,6 +260,7 @@ void App() {
     Delay(2000);
     DisplayBinary(0);
     system("CLS");
+    printf("\033[?25h");
     QUIT = 0;
     // DELAY = DEFAULT_DELAY;
 
@@ -274,6 +275,7 @@ void App() {
     printf("\nSeleccione una opcion: ");
 
     scanf("%d", &option);
+    printf("\033[?25l");
 
     HANDLE threads[2];
     DWORD threadIds[2];
@@ -326,4 +328,6 @@ void App() {
   } while (1);
 }
 
-int main() { App(); }
+int main() {
+  App();
+}
