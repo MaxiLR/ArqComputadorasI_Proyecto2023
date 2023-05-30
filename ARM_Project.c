@@ -66,14 +66,45 @@ unsigned int Login() {
   }
 }
 
-void DisplayBinary(unsigned char DISPLAY) {
+void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
+  system("CLS");
+  char display[8];
+  int i = 0;
   for (unsigned int POINTER = 0x80; POINTER > 0; POINTER = POINTER >> 1) {
-    if (POINTER & DISPLAY)
-      printf("*");
-    else
-      printf("_");
+    if (POINTER & DISPLAY) {
+      display[i] = '*';
+      i++;
+    } else {
+      display[i] = '_';
+      i++;
+    }
   }
-  printf("\n");
+
+  switch (option) {
+  case 1:
+    printf("SECUENCIA: Auto Fantastico\n\n");
+    break;
+  case 2:
+    printf("SECUENCIA: El Choque\n\n");
+    break;
+  case 3:
+    printf("SECUENCIA: El Rebote\n\n");
+    break;
+  case 4:
+    printf("SECUENCIA: El Espiral\n\n");
+    break;
+  case 5:
+    printf("SECUENCIA: El Caos\n\n");
+    break;
+  case 0:
+    break;
+  }
+
+  printf(display);
+  if (option) {
+    printf("\n\n");
+    printf("Presione la tecla Q para salir");
+  }
 }
 
 DWORD WINAPI keyListener() {
@@ -102,14 +133,14 @@ DWORD WINAPI AutoFantastico() {
     for (int i = 0; i < 7; i++) {
       if (QUIT)
         break;
-      DisplayBinary(DISPLAY);
+      DisplayBinary(DISPLAY, 1);
       DISPLAY = DISPLAY >> 1;
       Delay(DELAY);
     }
     for (int i = 0; i < 7; i++) {
       if (QUIT)
         break;
-      DisplayBinary(DISPLAY);
+      DisplayBinary(DISPLAY, 1);
       DISPLAY = DISPLAY << 1;
       Delay(DELAY);
     }
@@ -127,7 +158,7 @@ DWORD WINAPI ElChoque() {
       DISPLAY = SUB_DISPLAY_1 + SUB_DISPLAY_2;
       if (QUIT)
         break;
-      DisplayBinary(DISPLAY);
+      DisplayBinary(DISPLAY, 2);
       SUB_DISPLAY_1 = SUB_DISPLAY_1 >> 1;
       SUB_DISPLAY_2 = SUB_DISPLAY_2 << 1;
       Delay(DELAY);
@@ -144,20 +175,20 @@ DWORD WINAPI ElRebote() {
       for (DISPLAY; DISPLAY != 0b1; DISPLAY = DISPLAY >> 1) {
         if (QUIT)
           break;
-        DisplayBinary(DISPLAY);
+        DisplayBinary(DISPLAY, 3);
         Delay(DELAY);
       }
       for (int j = 0; j < r - 1; j++) {
         if (QUIT)
           break;
-        DisplayBinary(DISPLAY);
+        DisplayBinary(DISPLAY, 3);
         DISPLAY = DISPLAY << 1;
         Delay(DELAY);
       }
     }
     if (QUIT)
       break;
-    DisplayBinary(DISPLAY);
+    DisplayBinary(DISPLAY, 3);
     Delay(DELAY);
   }
 }
@@ -166,7 +197,7 @@ DWORD WINAPI ElEspiral() {
   system("CLS");
   unsigned char DISPLAY = 0;
 
-  DisplayBinary(DISPLAY);
+  DisplayBinary(DISPLAY, 4);
 
   while (!QUIT) {
     unsigned char SUB_DISPLAY_1 = 0x80;
@@ -178,13 +209,13 @@ DWORD WINAPI ElEspiral() {
       SUB_DISPLAY_1 = SUB_DISPLAY_1 >> 1;
       if (QUIT)
         break;
-      DisplayBinary(DISPLAY);
+      DisplayBinary(DISPLAY, 4);
       Delay(DELAY);
       DISPLAY += SUB_DISPLAY_2;
       SUB_DISPLAY_2 = SUB_DISPLAY_2 << 1;
       if (QUIT)
         break;
-      DisplayBinary(DISPLAY);
+      DisplayBinary(DISPLAY, 4);
       Delay(DELAY);
     }
     for (int i = 0; i < 4; i++) {
@@ -192,13 +223,13 @@ DWORD WINAPI ElEspiral() {
       SUB_DISPLAY_2 = SUB_DISPLAY_2 << 1;
       if (QUIT)
         break;
-      DisplayBinary(DISPLAY);
+      DisplayBinary(DISPLAY, 4);
       Delay(DELAY);
       DISPLAY -= SUB_DISPLAY_1;
       SUB_DISPLAY_1 = SUB_DISPLAY_1 >> 1;
       if (QUIT)
         break;
-      DisplayBinary(DISPLAY);
+      DisplayBinary(DISPLAY, 4);
       Delay(DELAY);
     }
   }
@@ -216,13 +247,13 @@ DWORD WINAPI ElCaos() {
       SUB_DISPLAY_1 = SUB_DISPLAY_1 >> 1;
       if (QUIT)
         break;
-      DisplayBinary(DISPLAY);
+      DisplayBinary(DISPLAY, 5);
       Delay(DELAY);
       DISPLAY += SUB_DISPLAY_2;
       SUB_DISPLAY_2 = SUB_DISPLAY_2 << 1;
       if (QUIT)
         break;
-      DisplayBinary(DISPLAY);
+      DisplayBinary(DISPLAY, 5);
       Delay(DELAY);
     }
     for (int i = 0; i < 4; i++) {
@@ -230,13 +261,13 @@ DWORD WINAPI ElCaos() {
       SUB_DISPLAY_2 = SUB_DISPLAY_2 >> 1;
       if (QUIT)
         break;
-      DisplayBinary(DISPLAY);
+      DisplayBinary(DISPLAY, 5);
       Delay(DELAY);
       DISPLAY -= SUB_DISPLAY_1;
       SUB_DISPLAY_1 = SUB_DISPLAY_1 << 1;
       if (QUIT)
         break;
-      DisplayBinary(DISPLAY);
+      DisplayBinary(DISPLAY, 5);
       Delay(DELAY);
     }
   }
@@ -258,7 +289,7 @@ void App() {
 
   do {
     Delay(2000);
-    DisplayBinary(0);
+    DisplayBinary(0, 0);
     system("CLS");
     printf("\033[?25h");
     QUIT = 0;
@@ -328,6 +359,4 @@ void App() {
   } while (1);
 }
 
-int main() {
-  App();
-}
+int main() { App(); }
