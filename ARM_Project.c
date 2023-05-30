@@ -19,6 +19,17 @@ void Delay(size_t a) {
     ;
 }
 
+void MoveCursorToOrigin() {
+  unsigned int i = 10;
+  while (i--)
+    printf("\033[F");
+}
+
+void Clear() {
+  printf("\033[2J");
+  MoveCursorToOrigin();
+}
+
 unsigned int Login() {
   char *right_password = PASSWORD;
   char input[5];
@@ -67,7 +78,6 @@ unsigned int Login() {
 }
 
 void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
-  system("CLS");
   char display[8];
   int i = 0;
   for (unsigned int POINTER = 0x80; POINTER > 0; POINTER = POINTER >> 1) {
@@ -82,29 +92,32 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
 
   switch (option) {
   case 1:
-    printf("SECUENCIA: Auto Fantastico\n\n");
+    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mAuto Fantastico\033[0m\n\n");
     break;
   case 2:
-    printf("SECUENCIA: El Choque\n\n");
+    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Choque\033[0m\n\n");
     break;
   case 3:
-    printf("SECUENCIA: El Rebote\n\n");
+    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Rebote\033[0m\n\n");
     break;
   case 4:
-    printf("SECUENCIA: El Espiral\n\n");
+    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Espiral\033[0m\n\n");
     break;
   case 5:
-    printf("SECUENCIA: El Caos\n\n");
+    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Caos\033[0m\n\n");
     break;
   case 0:
     break;
   }
 
   printf(display);
+
   if (option) {
     printf("\n\n");
-    printf("Presione la tecla Q para salir");
+    printf("\033[1;30mPresione la tecla Q para salir\033[0m");
   }
+
+  MoveCursorToOrigin();
 }
 
 DWORD WINAPI keyListener() {
@@ -127,7 +140,7 @@ DWORD WINAPI keyListener() {
 }
 
 DWORD WINAPI AutoFantastico() {
-  system("CLS");
+  Clear();
   while (!QUIT) {
     unsigned char DISPLAY = 0x80;
     for (int i = 0; i < 7; i++) {
@@ -148,7 +161,7 @@ DWORD WINAPI AutoFantastico() {
 }
 
 DWORD WINAPI ElChoque() {
-  system("CLS");
+  Clear();
   while (!QUIT) {
     unsigned char SUB_DISPLAY_1 = 0x80;
     unsigned char SUB_DISPLAY_2 = 0x01;
@@ -167,7 +180,7 @@ DWORD WINAPI ElChoque() {
 }
 
 DWORD WINAPI ElRebote() {
-  system("CLS");
+  Clear();
   while (!QUIT) {
     unsigned char DISPLAY = 0x80;
 
@@ -194,7 +207,7 @@ DWORD WINAPI ElRebote() {
 }
 
 DWORD WINAPI ElEspiral() {
-  system("CLS");
+  Clear();
   unsigned char DISPLAY = 0;
 
   DisplayBinary(DISPLAY, 4);
@@ -236,7 +249,7 @@ DWORD WINAPI ElEspiral() {
 }
 
 DWORD WINAPI ElCaos() {
-  system("CLS");
+  Clear();
   unsigned char DISPLAY = 0;
   while (!QUIT) {
     unsigned char SUB_DISPLAY_1 = 0x80;
@@ -275,11 +288,12 @@ DWORD WINAPI ElCaos() {
 
 void App() {
   unsigned int option;
+  Clear();
 
   int i = 0;
   for (i; i < 3; i++) {
     Delay(2000);
-    system("CLS");
+    Clear();
     if (Login())
       break;
   }
@@ -290,7 +304,7 @@ void App() {
   do {
     Delay(2000);
     DisplayBinary(0, 0);
-    system("CLS");
+    Clear();
     printf("\033[?25h");
     QUIT = 0;
     // DELAY = DEFAULT_DELAY;
@@ -350,6 +364,7 @@ void App() {
     case 0:
       printf("\nSaliendo del programa...\n");
       Delay(2000);
+      Clear();
       exit(0);
       break;
     default:
