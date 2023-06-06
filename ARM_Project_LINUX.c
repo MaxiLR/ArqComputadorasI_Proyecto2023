@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
-#include <ncurses.h>
-#include <unistd.h>
+#include <curses.h>
 
 // CONSTANTS
 #define PASSWORD "12345"
@@ -64,10 +63,10 @@ unsigned int Login() {
 input[i] = '\0';
 
 if (strcmp(input, right_password) == 0) {
-  printf("\nAcceso concedido\n");
+  printf("\n\n\rAcceso concedido\n\r");
   return 1;
 } else {
-  printf("\nAcceso denegado\n");
+  printf("\n\n\rAcceso denegado\n\r");
   return 0;
 }
 }
@@ -87,19 +86,19 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
 
   switch (option) {
   case 1:
-    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mAuto Fantastico\033[0m\n\n");
+    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mAuto Fantastico\033[0m\n\r\n\r");
     break;
   case 2:
-    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Choque\033[0m\n\n");
+    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Choque\033[0m\n\r\n\r");
     break;
   case 3:
-    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Rebote\033[0m\n\n");
+    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Rebote\033[0m\n\r\n\r");
     break;
   case 4:
-    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Espiral\033[0m\n\n");
+    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Espiral\033[0m\n\r\n\r");
     break;
   case 5:
-    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Caos\033[0m\n\n");
+    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Caos\033[0m\n\r\n\r");
     break;
   case 0:
     break;
@@ -108,7 +107,7 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
   printf("%s", display);
 
   if (option) {
-    printf("\n\n");
+    printf("\n\r\n\r");
     printf("\033[1;30mPresione la tecla Q para salir\033[0m");
   }
 
@@ -302,17 +301,16 @@ void App() {
     Clear();
     printf("\033[?25h");
     QUIT = 0;
-    // DELAY = DEFAULT_DELAY;
 
-    printf("------ S E C U E N C I A S  D E  L U C E S ------\n");
-    printf("1. Auto Fantastico\n");
-    printf("2. El Choque\n");
-    printf("3. El Rebote\n");
-    printf("4. El Espiral\n");
-    printf("5. El Caos\n");
-    printf("0. Salir\n");
-    printf("-------------------------------------------------\n");
-    printf("\nSeleccione una opcion: ");
+    printf("------ S E C U E N C I A S  D E  L U C E S ------\n\r");
+    printf("1. Auto Fantastico\n\r");
+    printf("2. El Choque\n\r");
+    printf("3. El Rebote\n\r");
+    printf("4. El Espiral\n\r");
+    printf("5. El Caos\n\r");
+    printf("0. Salir\n\r");
+    printf("-------------------------------------------------\n\r");
+    printf("\n\rSeleccione una opcion: ");
 
     scanf("%s1", &option[0]);
 
@@ -362,13 +360,13 @@ void App() {
 
       break;
     case '0':
-      printf("\nSaliendo del programa...\n");
+      printf("\n\n\rSaliendo del programa...\n\r");
       Delay(2000);
       Clear();
       exit(0);
       break;
     default:
-      printf("\nIngrese una opcion valida\n");
+      printf("\n\rIngrese una opcion valida\n\r");
       break;
     }
   } while (1);
@@ -378,7 +376,7 @@ int main() {
   initscr();              // Inicializar la pantalla de ncurses
   keypad(stdscr, TRUE);   // Habilitar la entrada de teclado especial
   nodelay(stdscr, TRUE);  // Configurar getch() para no bloquear
-  noecho();               // No mostrar los caracteres ingresados en pantalla
+  cbreak();
 
   App();
 
