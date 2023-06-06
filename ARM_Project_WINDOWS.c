@@ -287,13 +287,6 @@ DWORD WINAPI ElCaos() {
 }
 
 void App() {
-  HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-  DWORD mode;
-
-  GetConsoleMode(hConsole, &mode);
-  mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-  SetConsoleMode(hConsole, mode);
-
   unsigned int option;
   Clear();
 

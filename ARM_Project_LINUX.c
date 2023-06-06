@@ -62,10 +62,10 @@ unsigned int Login() {
   input[i] = '\0';
 
   if (strcmp(input, right_password) == 0) {
-    printf("\n\n\rAcceso concedido\n\r");
+    printf("\n\n\rAccess Granted!\n\r");
     return 1;
   } else {
-    printf("\n\n\rAcceso denegado\n\r");
+    printf("\n\n\rAccess Denied!\n\r");
     return 0;
   }
 }
