@@ -104,7 +104,7 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
     break;
   }
 
-  printf("%s\n\n\r\033[1;33mDELAY: \033[0m%d", display, DELAY);
+  printf("%s\n\n\r\033[1;33mDELAY: \033[0m%d   ", display, DELAY);
 
   if (option) {
     printf("\n\r\n\r");
