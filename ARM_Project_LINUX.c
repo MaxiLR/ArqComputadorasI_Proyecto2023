@@ -120,7 +120,7 @@ void *keyListener() {
     if (key == QUIT_KEY)
       QUIT = 1;
     else if (key == KEY_UP) {
-      if (DELAY - DELAY_INTERVAL >= 0)
+      if (DELAY - DELAY_INTERVAL != 0)
         DELAY -= DELAY_INTERVAL;
     } else if (key == KEY_DOWN) {
       DELAY += DELAY_INTERVAL;
