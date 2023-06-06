@@ -11,7 +11,12 @@
 #define DEFAULT_DELAY 1000
 
 unsigned int QUIT;
-size_t DELAY = DEFAULT_DELAY;
+size_t DELAY;
+size_t DELAY_1 = DEFAULT_DELAY;
+size_t DELAY_2 = DEFAULT_DELAY;
+size_t DELAY_3 = DEFAULT_DELAY;
+size_t DELAY_4 = DEFAULT_DELAY;
+size_t DELAY_5 = DEFAULT_DELAY;
 
 void Delay(size_t a) {
   a = a * 100000;

@@ -11,7 +11,12 @@
 #define DEFAULT_DELAY 1000
 
 unsigned int QUIT;
-size_t DELAY = DEFAULT_DELAY;
+size_t DELAY;
+size_t DELAY_1 = DEFAULT_DELAY;
+size_t DELAY_2 = DEFAULT_DELAY;
+size_t DELAY_3 = DEFAULT_DELAY;
+size_t DELAY_4 = DEFAULT_DELAY;
+size_t DELAY_5 = DEFAULT_DELAY;
 
 void Delay(size_t a) {
   a = a * 100000;
@@ -326,40 +331,50 @@ void App() {
     DWORD threadIds[2];
     switch (option) {
     case 1:
+      DELAY = DELAY_1;
       threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
       threads[1] =
           CreateThread(NULL, 0, AutoFantastico, NULL, 0, &threadIds[1]);
       WaitForMultipleObjects(2, threads, TRUE, INFINITE);
       CloseHandle(threads[0]);
       CloseHandle(threads[1]);
+      DELAY_1 = DELAY;
       break;
     case 2:
+      DELAY = DELAY_2;
       threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
       threads[1] = CreateThread(NULL, 0, ElChoque, NULL, 0, &threadIds[1]);
       WaitForMultipleObjects(2, threads, TRUE, INFINITE);
       CloseHandle(threads[0]);
       CloseHandle(threads[1]);
+      DELAY_2 = DELAY;
       break;
     case 3:
+      DELAY = DELAY_3;
       threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
       threads[1] = CreateThread(NULL, 0, ElRebote, NULL, 0, &threadIds[1]);
       WaitForMultipleObjects(2, threads, TRUE, INFINITE);
       CloseHandle(threads[0]);
       CloseHandle(threads[1]);
+      DELAY_3 = DELAY;
       break;
     case 4:
+      DELAY = DELAY_4;
       threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
       threads[1] = CreateThread(NULL, 0, ElEspiral, NULL, 0, &threadIds[1]);
       WaitForMultipleObjects(2, threads, TRUE, INFINITE);
       CloseHandle(threads[0]);
       CloseHandle(threads[1]);
+      DELAY_4 = DELAY;
       break;
     case 5:
+      DELAY = DELAY_5;
       threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
       threads[1] = CreateThread(NULL, 0, ElCaos, NULL, 0, &threadIds[1]);
       WaitForMultipleObjects(2, threads, TRUE, INFINITE);
       CloseHandle(threads[0]);
       CloseHandle(threads[1]);
+      DELAY_5 = DELAY;
       break;
     case 0:
       printf("\nSaliendo del programa...\n");
