@@ -1,8 +1,8 @@
+#include <curses.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <pthread.h>
-#include <curses.h>
 
 // CONSTANTS
 #define PASSWORD "12345"
@@ -28,7 +28,6 @@ void MoveCursorToOrigin() {
 void Clear() {
   printf("\033[2J");
   MoveCursorToOrigin();
-
 }
 
 unsigned int Login() {
@@ -38,7 +37,7 @@ unsigned int Login() {
   char c;
   printf("Ingrese su password de 5 digitos: ");
 
- while (1) {
+  while (1) {
     c = getchar();
 
     if (c == '\n') {
@@ -60,15 +59,15 @@ unsigned int Login() {
       break;
   }
 
-input[i] = '\0';
+  input[i] = '\0';
 
-if (strcmp(input, right_password) == 0) {
-  printf("\n\n\rAcceso concedido\n\r");
-  return 1;
-} else {
-  printf("\n\n\rAcceso denegado\n\r");
-  return 0;
-}
+  if (strcmp(input, right_password) == 0) {
+    printf("\n\n\rAcceso concedido\n\r");
+    return 1;
+  } else {
+    printf("\n\n\rAcceso denegado\n\r");
+    return 0;
+  }
 }
 
 void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
@@ -86,7 +85,8 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
 
   switch (option) {
   case 1:
-    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mAuto Fantastico\033[0m\n\r\n\r");
+    printf(
+        "\033[1;31mSECUENCIA:\033[0m \033[1;36mAuto Fantastico\033[0m\n\r\n\r");
     break;
   case 2:
     printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Choque\033[0m\n\r\n\r");
@@ -104,7 +104,7 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
     break;
   }
 
-  printf("%s", display);
+  printf("%s\n\n\r\033[1;33mDELAY: \033[0m%d", display, DELAY);
 
   if (option) {
     printf("\n\r\n\r");
@@ -114,23 +114,18 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
   MoveCursorToOrigin();
 }
 
-void *keyListener()
-{
-    while (!QUIT)
-    {
-        int key = getchar();
-        if (key == QUIT_KEY)
-            QUIT = 1;
-        else if (key == KEY_UP)
-        {
-            if (DELAY - DELAY_INTERVAL >= 0)
-                DELAY -= DELAY_INTERVAL;
-        }
-        else if (key == KEY_DOWN)
-        {
-            DELAY += DELAY_INTERVAL;
-        }
+void *keyListener() {
+  while (!QUIT) {
+    int key = getch();
+    if (key == QUIT_KEY)
+      QUIT = 1;
+    else if (key == KEY_UP) {
+      if (DELAY - DELAY_INTERVAL >= 0)
+        DELAY -= DELAY_INTERVAL;
+    } else if (key == KEY_DOWN) {
+      DELAY += DELAY_INTERVAL;
     }
+  }
 }
 
 void *AutoFantastico() {
@@ -299,7 +294,6 @@ void App() {
     Delay(2000);
     DisplayBinary(0, 0);
     Clear();
-    printf("\033[?25h");
     QUIT = 0;
 
     printf("------ S E C U E N C I A S  D E  L U C E S ------\n\r");
@@ -312,7 +306,7 @@ void App() {
     printf("-------------------------------------------------\n\r");
     printf("\n\rSeleccione una opcion: ");
 
-    scanf("%s1", &option[0]);
+    option[0] = getchar();
 
     if (option[1] != '\0') {
       option[0] = 'i';
@@ -366,16 +360,17 @@ void App() {
       exit(0);
       break;
     default:
-      printf("\n\rIngrese una opcion valida\n\r");
+      printf("\n\n\rIngrese una opcion valida\n\r");
       break;
     }
   } while (1);
 }
 
 int main() {
-  initscr();              // Inicializar la pantalla de ncurses
-  keypad(stdscr, TRUE);   // Habilitar la entrada de teclado especial
-  nodelay(stdscr, TRUE);  // Configurar getch() para no bloquear
+  initscr();             // Inicializar la pantalla de ncurses
+  keypad(stdscr, TRUE);  // Habilitar la entrada de teclado especial
+  nodelay(stdscr, TRUE); // Configurar getch() para no bloquear
+  noecho();
   cbreak();
 
   App();
