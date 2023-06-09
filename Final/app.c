@@ -1,8 +1,6 @@
 #include <pthread.h>
 #include "sequences.c"
 
-//char led[8] = {7, 8, 25, 24, 23, 18, 15, 14};
-
 void App() {
   unsigned char option[1];
   Clear();

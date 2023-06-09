@@ -1,5 +1,5 @@
 #include <stdio.h>
-//#include "EasyPIO.h"
+#include "EasyPIO.h"
 
 #define QUIT_KEY 'q'
 #define DELAY_INTERVAL 250
@@ -12,6 +12,8 @@ size_t DELAY_2 = DEFAULT_DELAY;
 size_t DELAY_3 = DEFAULT_DELAY;
 size_t DELAY_4 = DEFAULT_DELAY;
 size_t DELAY_5 = DEFAULT_DELAY;
+
+char led[8] = {7, 8, 25, 24, 23, 18, 15, 14};
 
 void Delay(size_t a) {
   a = a * 100000;
@@ -74,7 +76,7 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
   MoveCursorToOrigin();
 }
 
-/*void LedOutput(unsigned char DISPLAY) {
+void LedOutput(unsigned char DISPLAY) {
     int i = 0;
   for (unsigned int POINTER = 0x80; POINTER > 0; POINTER = POINTER >> 1) {
     if (POINTER & DISPLAY) {
@@ -85,7 +87,13 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
       i++;
     }
   }
-}*/
+}
+
+void LedOff() {
+    for (int i = 0; i < 8; i++) {
+       digitalWrite(led[i], 0);
+    } 
+}
 
 void *keyListener() {
     while (!QUIT) {
@@ -111,7 +119,7 @@ void *AutoFantastico() {
       if (QUIT)
         break;
       DisplayBinary(DISPLAY, 1);
-      //LedOutput(DISPLAY);
+      LedOutput(DISPLAY);
       DISPLAY = DISPLAY >> 1;
       Delay(DELAY);
     }
@@ -119,13 +127,14 @@ void *AutoFantastico() {
       if (QUIT)
         break;
       DisplayBinary(DISPLAY, 1);
-      //LedOutput(DISPLAY);
+      LedOutput(DISPLAY);
       DISPLAY = DISPLAY << 1;
       Delay(DELAY);
     }
     DELAY_1 = DELAY;
   }
   QUIT = 0;
+  LedOff();
 }
 
 void *ElChoque() {
@@ -140,12 +149,13 @@ void *ElChoque() {
       if (QUIT)
         break;
       DisplayBinary(DISPLAY, 2);
-      //LedOutput(DISPLAY);
+      LedOutput(DISPLAY);
       DISPLAY = table[i];
       Delay(DELAY);
     }
   }
   QUIT = 0;
+  LedOff();
 }
 
 void *ElRebote() {
@@ -158,14 +168,14 @@ void *ElRebote() {
         if (QUIT)
           break;
         DisplayBinary(DISPLAY, 3);
-        //LedOutput(DISPLAY);
+        LedOutput(DISPLAY);
         Delay(DELAY);
       }
       for (int j = 0; j < r - 1; j++) {
         if (QUIT)
           break;
         DisplayBinary(DISPLAY, 3);
-        //LedOutput(DISPLAY);
+        LedOutput(DISPLAY);
         DISPLAY = DISPLAY << 1;
         Delay(DELAY);
       }
@@ -173,10 +183,11 @@ void *ElRebote() {
     if (QUIT)
       break;
     DisplayBinary(DISPLAY, 3);
-    //LedOutput(DISPLAY);
+    LedOutput(DISPLAY);
     Delay(DELAY);
   }
   QUIT = 0;
+  LedOff();
 }
 
 void *ElEspiral() {
@@ -191,12 +202,13 @@ void *ElEspiral() {
       if (QUIT)
         break;
       DisplayBinary(DISPLAY, 4);
-      //LedOutput(DISPLAY);
+      LedOutput(DISPLAY);
       DISPLAY = table[i];
       Delay(DELAY);
     }
   }
   QUIT = 0;
+  LedOff();
 }
 
 void *ElCaos() {
@@ -212,14 +224,14 @@ void *ElCaos() {
       if (QUIT)
         break;
       DisplayBinary(DISPLAY, 5);
-      //LedOutput(DISPLAY);
+      LedOutput(DISPLAY);
       Delay(DELAY);
       DISPLAY += SUB_DISPLAY_2;
       SUB_DISPLAY_2 = SUB_DISPLAY_2 << 1;
       if (QUIT)
         break;
       DisplayBinary(DISPLAY, 5);
-      //LedOutput(DISPLAY);
+      LedOutput(DISPLAY);
       Delay(DELAY);
     }
     for (int i = 0; i < 4; i++) {
@@ -228,16 +240,17 @@ void *ElCaos() {
       if (QUIT)
         break;
       DisplayBinary(DISPLAY, 5);
-      //LedOutput(DISPLAY);
+      LedOutput(DISPLAY);
       Delay(DELAY);
       DISPLAY -= SUB_DISPLAY_1;
       SUB_DISPLAY_1 = SUB_DISPLAY_1 << 1;
       if (QUIT)
         break;
       DisplayBinary(DISPLAY, 5);
-      //LedOutput(DISPLAY);
+      LedOutput(DISPLAY);
       Delay(DELAY);
     }
   }
   QUIT = 0;
+  LedOff();
 }
