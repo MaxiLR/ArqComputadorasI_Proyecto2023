@@ -139,6 +139,7 @@ void *AutoFantastico() {
 
 void *ElChoque() {
   Clear();
+  DELAY = DELAY_2;
   unsigned int table[] = {0x42, 0x24, 0x18, 0x24, 0x42, 0x81};
   unsigned char DISPLAY = 0x81;
   while (!QUIT) {
@@ -153,6 +154,7 @@ void *ElChoque() {
       DISPLAY = table[i];
       Delay(DELAY);
     }
+    DELAY_2 = DELAY;
   }
   QUIT = 0;
   LedOff();
@@ -160,6 +162,7 @@ void *ElChoque() {
 
 void *ElRebote() {
   Clear();
+  DELAY = DELAY_3;
   while (!QUIT) {
     unsigned char DISPLAY = 0x80;
 
@@ -185,6 +188,7 @@ void *ElRebote() {
     DisplayBinary(DISPLAY, 3);
     LedOutput(DISPLAY);
     Delay(DELAY);
+    DELAY_3 = DELAY;
   }
   QUIT = 0;
   LedOff();
@@ -192,6 +196,7 @@ void *ElRebote() {
 
 void *ElEspiral() {
   Clear();
+  DELAY = DELAY_4;
   unsigned int table[] = {0x80, 0x81, 0xC1, 0xC3, 0xE3, 0xE7, 0xF7, 0xFF, 0xEF, 0xE7, 0xC7, 0xC3, 0x83, 0x81, 0x1, 0x0};
   unsigned char DISPLAY = 0;
   while (!QUIT) {
@@ -206,6 +211,7 @@ void *ElEspiral() {
       DISPLAY = table[i];
       Delay(DELAY);
     }
+    DELAY_4 = DELAY;
   }
   QUIT = 0;
   LedOff();
@@ -213,6 +219,7 @@ void *ElEspiral() {
 
 void *ElCaos() {
   Clear();
+  DELAY = DELAY_5;
   unsigned char DISPLAY = 0;
   while (!QUIT) {
     unsigned char SUB_DISPLAY_1 = 0x80;
@@ -250,6 +257,7 @@ void *ElCaos() {
       LedOutput(DISPLAY);
       Delay(DELAY);
     }
+    DELAY_5 = DELAY;
   }
   QUIT = 0;
   LedOff();
