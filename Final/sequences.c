@@ -89,12 +89,6 @@ void LedOutput(unsigned char DISPLAY) {
   }
 }
 
-void LedOff() {
-    for (int i = 0; i < 8; i++) {
-       digitalWrite(led[i], 0);
-    } 
-}
-
 void *keyListener() {
     while (!QUIT) {
         int key = getch();
