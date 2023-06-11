@@ -89,7 +89,7 @@ void LedOutput(unsigned char DISPLAY) {
   }
 }
 
-void *keyListener() {
+void *KeyListener() {
     while (!QUIT) {
         int key = getch();
         if (key == QUIT_KEY)
@@ -125,8 +125,8 @@ void *AutoFantastico() {
       DISPLAY = DISPLAY << 1;
       Delay(DELAY);
     }
-    DELAY_1 = DELAY;
   }
+  DELAY_1 = DELAY;
   QUIT = 0;
 }
 
@@ -147,8 +147,8 @@ void *ElChoque() {
       DISPLAY = table[i];
       Delay(DELAY);
     }
-    DELAY_2 = DELAY;
   }
+  DELAY_2 = DELAY;
   QUIT = 0;
 }
 
@@ -180,8 +180,8 @@ void *ElRebote() {
     DisplayBinary(DISPLAY, 3);
     LedOutput(DISPLAY);
     Delay(DELAY);
-    DELAY_3 = DELAY;
   }
+  DELAY_3 = DELAY;
   QUIT = 0;
 }
 
@@ -202,8 +202,8 @@ void *ElEspiral() {
       DISPLAY = table[i];
       Delay(DELAY);
     }
-    DELAY_4 = DELAY;
   }
+  DELAY_4 = DELAY;
   QUIT = 0;
 }
 
@@ -247,7 +247,7 @@ void *ElCaos() {
       LedOutput(DISPLAY);
       Delay(DELAY);
     }
-    DELAY_5 = DELAY;
   }
+  DELAY_5 = DELAY;
   QUIT = 0;
 }

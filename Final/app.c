@@ -45,35 +45,35 @@ void App() {
       pthread_t threads[2];
 
     case '1':
-      pthread_create(&threads[0], NULL, keyListener, NULL);
+      pthread_create(&threads[0], NULL, KeyListener, NULL);
       pthread_create(&threads[1], NULL, AutoFantastico, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       break;
 
     case '2':
-      pthread_create(&threads[0], NULL, keyListener, NULL);
+      pthread_create(&threads[0], NULL, KeyListener, NULL);
       pthread_create(&threads[1], NULL, ElChoque, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       break;
 
     case '3':
-      pthread_create(&threads[0], NULL, keyListener, NULL);
+      pthread_create(&threads[0], NULL, KeyListener, NULL);
       pthread_create(&threads[1], NULL, ElRebote, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       break;
 
     case '4':
-      pthread_create(&threads[0], NULL, keyListener, NULL);
+      pthread_create(&threads[0], NULL, KeyListener, NULL);
       pthread_create(&threads[1], NULL, ElEspiral, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       break;
 
     case '5':
-      pthread_create(&threads[0], NULL, keyListener, NULL);
+      pthread_create(&threads[0], NULL, KeyListener, NULL);
       pthread_create(&threads[1], NULL, ElCaos, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);

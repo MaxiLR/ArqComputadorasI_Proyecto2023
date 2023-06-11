@@ -119,7 +119,7 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
   MoveCursorToOrigin();
 }
 
-void *keyListener() {
+void *KeyListener() {
   while (!QUIT) {
     int key = getch();
     if (key == QUIT_KEY)
@@ -325,7 +325,7 @@ void App() {
 
     case '1':
       DELAY = DELAY_1;
-      pthread_create(&threads[0], NULL, keyListener, NULL);
+      pthread_create(&threads[0], NULL, KeyListener, NULL);
       pthread_create(&threads[1], NULL, AutoFantastico, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
@@ -334,7 +334,7 @@ void App() {
       break;
     case '2':
       DELAY = DELAY_2;
-      pthread_create(&threads[0], NULL, keyListener, NULL);
+      pthread_create(&threads[0], NULL, KeyListener, NULL);
       pthread_create(&threads[1], NULL, ElChoque, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
@@ -343,7 +343,7 @@ void App() {
       break;
     case '3':
       DELAY = DELAY_3;
-      pthread_create(&threads[0], NULL, keyListener, NULL);
+      pthread_create(&threads[0], NULL, KeyListener, NULL);
       pthread_create(&threads[1], NULL, ElRebote, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
@@ -352,7 +352,7 @@ void App() {
       break;
     case '4':
       DELAY = DELAY_4;
-      pthread_create(&threads[0], NULL, keyListener, NULL);
+      pthread_create(&threads[0], NULL, KeyListener, NULL);
       pthread_create(&threads[1], NULL, ElEspiral, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
@@ -361,7 +361,7 @@ void App() {
       break;
     case '5':
       DELAY = DELAY_5;
-      pthread_create(&threads[0], NULL, keyListener, NULL);
+      pthread_create(&threads[0], NULL, KeyListener, NULL);
       pthread_create(&threads[1], NULL, ElCaos, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);

@@ -125,7 +125,7 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
   MoveCursorToOrigin();
 }
 
-DWORD WINAPI keyListener() {
+DWORD WINAPI KeyListener() {
   while (!QUIT) {
     if (kbhit()) {
       char key = getch();
@@ -332,7 +332,7 @@ void App() {
     switch (option) {
     case 1:
       DELAY = DELAY_1;
-      threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
+      threads[0] = CreateThread(NULL, 0, KeyListener, NULL, 0, &threadIds[0]);
       threads[1] =
           CreateThread(NULL, 0, AutoFantastico, NULL, 0, &threadIds[1]);
       WaitForMultipleObjects(2, threads, TRUE, INFINITE);
@@ -342,7 +342,7 @@ void App() {
       break;
     case 2:
       DELAY = DELAY_2;
-      threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
+      threads[0] = CreateThread(NULL, 0, KeyListener, NULL, 0, &threadIds[0]);
       threads[1] = CreateThread(NULL, 0, ElChoque, NULL, 0, &threadIds[1]);
       WaitForMultipleObjects(2, threads, TRUE, INFINITE);
       CloseHandle(threads[0]);
@@ -351,7 +351,7 @@ void App() {
       break;
     case 3:
       DELAY = DELAY_3;
-      threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
+      threads[0] = CreateThread(NULL, 0, KeyListener, NULL, 0, &threadIds[0]);
       threads[1] = CreateThread(NULL, 0, ElRebote, NULL, 0, &threadIds[1]);
       WaitForMultipleObjects(2, threads, TRUE, INFINITE);
       CloseHandle(threads[0]);
@@ -360,7 +360,7 @@ void App() {
       break;
     case 4:
       DELAY = DELAY_4;
-      threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
+      threads[0] = CreateThread(NULL, 0, KeyListener, NULL, 0, &threadIds[0]);
       threads[1] = CreateThread(NULL, 0, ElEspiral, NULL, 0, &threadIds[1]);
       WaitForMultipleObjects(2, threads, TRUE, INFINITE);
       CloseHandle(threads[0]);
@@ -369,7 +369,7 @@ void App() {
       break;
     case 5:
       DELAY = DELAY_5;
-      threads[0] = CreateThread(NULL, 0, keyListener, NULL, 0, &threadIds[0]);
+      threads[0] = CreateThread(NULL, 0, KeyListener, NULL, 0, &threadIds[0]);
       threads[1] = CreateThread(NULL, 0, ElCaos, NULL, 0, &threadIds[1]);
       WaitForMultipleObjects(2, threads, TRUE, INFINITE);
       CloseHandle(threads[0]);
