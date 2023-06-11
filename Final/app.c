@@ -1,6 +1,9 @@
 #include <pthread.h>
 #include "sequences.c"
 
+extern void ElEspiralASMB();
+extern void el_rebote_asm();
+
 void App() {
   unsigned char option[1];
   Clear();
@@ -60,14 +63,14 @@ void App() {
 
     case '3':
       pthread_create(&threads[0], NULL, KeyListener, NULL);
-      pthread_create(&threads[1], NULL, ElRebote, NULL);
+      pthread_create(&threads[1], NULL, el_rebote_asm, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       break;
 
     case '4':
       pthread_create(&threads[0], NULL, KeyListener, NULL);
-      pthread_create(&threads[1], NULL, ElEspiral, NULL);
+      pthread_create(&threads[1], NULL, ElEspiralASMB, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       break;
