@@ -19,6 +19,7 @@ void App() {
   do {
     Delay(2000);
     DisplayBinary(0, 0);
+    LedOutput(0);
     Clear();
     printf("\033[?25h");
 

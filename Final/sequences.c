@@ -128,7 +128,6 @@ void *AutoFantastico() {
     DELAY_1 = DELAY;
   }
   QUIT = 0;
-  LedOff();
 }
 
 void *ElChoque() {
@@ -151,7 +150,6 @@ void *ElChoque() {
     DELAY_2 = DELAY;
   }
   QUIT = 0;
-  LedOff();
 }
 
 void *ElRebote() {
@@ -185,7 +183,6 @@ void *ElRebote() {
     DELAY_3 = DELAY;
   }
   QUIT = 0;
-  LedOff();
 }
 
 void *ElEspiral() {
@@ -208,7 +205,6 @@ void *ElEspiral() {
     DELAY_4 = DELAY;
   }
   QUIT = 0;
-  LedOff();
 }
 
 void *ElCaos() {
@@ -254,5 +250,4 @@ void *ElCaos() {
     DELAY_5 = DELAY;
   }
   QUIT = 0;
-  LedOff();
 }
