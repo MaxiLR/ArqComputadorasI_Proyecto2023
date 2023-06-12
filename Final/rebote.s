@@ -11,7 +11,6 @@
 ElReboteASMB:
     PUSH {R0,R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,LR}
     BL Clear
-    MOV R4, #0x80 // Init DISPLAY with 0
     LDR R11, =DELAY_3 // DELAY_3(Address)
     LDR R6, [R11] // DELAY_3(Value)
     LDR R9, =DELAY // DELAY(Address)
@@ -20,8 +19,8 @@ ElReboteASMB:
 
     while:
         MOV R8, #7 // Init r = 0, for loop
+        MOV R4, #0x80 // Init DISPLAY with 0
         for:
-            MOV R4, #0x80 // Init DISPLAY with 0
             for_outer:
                 LDR R7, [R10] // QUIT(Value)
                 CMP R7, #1
