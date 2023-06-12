@@ -1,6 +1,6 @@
 .text
 
-.global ElReboteASM
+.global ElReboteASMB
 .global QUIT
 .global DELAY
 .global DELAY_3
@@ -9,7 +9,7 @@
 .global Delay
 .global Clear
 
-ElReboteASM:
+ElReboteASMB:
     PUSH {R0,R1,R2,R3,R4,R5,R6,LR}                      // Guardar LR en la pila
     BL Clear                       // Llamar a la función Clear
     LDR R0, =DELAY_3               // Cargar la dirección de memoria de DELAY_3 en R0
