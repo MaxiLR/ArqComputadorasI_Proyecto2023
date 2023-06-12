@@ -6,11 +6,11 @@
 .global DisplayBinary
 .global LedOutput
 .global Delay
+.global Clear
 
-
-ElReboteASMB:
-    PUSH {R0, R4, R5, R6, R7, R8, R9, R10, R11, LR}
-    MOV R4, #0 // Init DISPLAY with 0
+ELReboteASMB:
+    PUSH {R0,R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,LR}
+    BL Clear
     LDR R11, =DELAY_3 // DELAY_3(Address)
     LDR R6, [R11] // DELAY_3(Value)
     LDR R9, =DELAY // DELAY(Address)
@@ -20,6 +20,7 @@ ElReboteASMB:
     while:
         MOV R8, #7 // Init r = 0, for loop
         for:
+            MOV R4, #0x80 // Init DISPLAY with 0
             for_outer:
                 LDR R7, [R10] // QUIT(Value)
                 CMP R7, #1
@@ -85,13 +86,15 @@ ElReboteASMB:
         CMP R0, R6
         BL Delay
 
+        LDR R7, [R10] // QUIT(Value)
+        CMP R7, #0
         BEQ while
 
     break:
     STR R6, [R11]
     MOV R0, #0
     STR R0, [R10]
-    POP {R0, R4, R5, R6, R7, R8, R9, R10, R11, PC}
+    POP {R0,R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,PC}
 
 .data
 .end
