@@ -1,8 +1,91 @@
 .text
+.global ELReboteASMB
+.global QUIT
+.global DELAY
+.global DELAY_3
+.global DisplayBinary
+.global LedOutput
+.global Delay
 
-.global el_rebote_asm
 
-el_rebote_asm:
+ElReboteASMB:
+    PUSH {R0, R4, R5, R6, R7, R8, R9, R10, R11, R12, LR}
+    MOV R4, #0 // Init DISPLAY with 0
+    LDR R11, =DELAY_3 // DELAY_3(Address)
+    LDR R6, [R11] // DELAY_3(Value)
+    LDR R9, =DELAY // DELAY(Address)
+    STR R6, [R9] // DELAY = DELAY_3
+    LDR R10, =QUIT // QUIT(Address)
+
+    while:
+        MOV R8, #7 // Init r = 0, for loop
+        for:
+        MOV R4, #0 // Init DISPLAYcounter = 0, for loop_outer
+        MOV R12, #0 // Init j = 0, for loop_inner
+            for_outer:
+                LDR R7, [R10]
+                CMP R7, #1
+                BEQ break
+
+                MOV R0, R4
+                MOV R1, #4
+                BL DisplayBinary
+
+                MOV R0, R4
+                BL LedOutput
+
+                LSR R4, R5, #1
+                 
+                LDR R6, [R9]
+                CMP R0, R6
+                BL Delay
+
+                ADD R5, R5, #1
+                CMP R5, 0b1
+                BLT for_outer
+
+            for_inner:
+                LDR R7, [R10]
+                CMP R7, #1
+                BEQ break
+
+                MOV R0, R4
+                MOV R1, #4
+                BL DisplayBinary
+
+                MOV R0, R4
+                BL LedOutput
+
+                LSL R4, R12, #1
+
+                LDR R6, [R9]
+                CMP R0, R6
+                BL Delay
+
+                ADD R12, R12, #1
+                SUB R8, R8, #1
+                CMP R12, R8
+                ADD R8, R8, #1
+                BLT for_inner
+
+            SUB R8, R8, #1
+            CMP R8, #7
+            BLT for
+
+
+        LDR R6, [R1]
+        CMP R7, #0
+        BEQ while
+
+    break:
+    STR R6, [R11]
+    MOV R0, #0
+    STR R0, [R10]
+    POP {R0, R4, R5, R6, R7, R8, R9, R10, R11, PC}
+
+.data
+
+/*ELReboteASMB:
     PUSH {LR}                      // Guardar LR en la pila
     BL Clear                       // Llamar a la función Clear
     LDR R0, =DELAY_3               // Cargar la dirección de memoria de DELAY_3 en R0
@@ -48,4 +131,4 @@ exit_loop_inner:
     BL LedOutput                   // Llamar a la función LedOutput con DISPLAY como argumento
     MOV R5, R3                     // Guardar el valor de DISPLAY en R5
     MOV R3, R3, LSL #1             // Desplazar lógicamente DISPLAY hacia la izquierda en 1 posición
-    BL Delay                      
+    BL Delay*/                      
