@@ -1,17 +1,26 @@
 .text
 .global	ElEspiralASMB
+.global QUIT
+.global DELAY
+.global DELAY_4
+.global DisplayBinary
+.global LedOutput
+.global Delay
 
 ElEspiralASMB:
-	PUSH {R4,R5,R6,R7,R8,LR}
+	PUSH {R4,R5,R6,R7,R8,R9,R10,R11,LR}
 	MOV R4, #0 // Init DISPLAY with 0
-	LDR R6, =DELAY_4 // DELAY(Value)
-	STR R6, =DELAY
+	LDR R11, =DELAY_4 // DELAY_4(Address)
+	LDR R6, [R11] // DELAY_4(Value)
+	LDR R9, =DELAY // DELAY(Address)
+	STR R6, [R9] // DELAY = DELAY_4
+	LDR R10, =QUIT // QUIT(Address)
 	LDR R8, =table
 
 	while:
 		MOV R5, #0 // Init i = 0, for loop
 		for:
-			LDR R7, =QUIT // QUIT(Value)
+			LDR R7, [R10] // QUIT(Value)
 			CMP R7, #1
 			BEQ break
 
@@ -24,7 +33,7 @@ ElEspiralASMB:
 			
 			LDRB R4, [R8, R5] // DISPLAY = table[i]
 
-			LDR R6, =DELAY
+			LDR R6, [R9] // DELAY(Value)
 			MOV R0, R6
 			BL Delay
 
@@ -32,14 +41,14 @@ ElEspiralASMB:
 			CMP R5, #16
 			BLT for
 
-		LDR R7, =QUIT // QUIT(Value)
+		LDR R7, [R10] // QUIT(Value)
 		CMP R7, #0
 		BEQ while
 
 	break:
-	STR R6, =DELAY_4
-	STR #0, =QUIT
-	POP {R4,R5,R6,R7,R8,PC}
+	STR R6, [R11]
+	STR #0, [R10]
+	POP {R4,R5,R6,R7,R8,R9,R10,R11,PC}
 		
 .data
 		
