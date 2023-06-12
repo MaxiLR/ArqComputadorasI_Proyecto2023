@@ -11,6 +11,7 @@
 ElReboteASMB:
     PUSH {R0,R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,LR}
     BL Clear
+    MOV R4, #0x80 // Init DISPLAY with 0
     LDR R11, =DELAY_3 // DELAY_3(Address)
     LDR R6, [R11] // DELAY_3(Value)
     LDR R9, =DELAY // DELAY(Address)
@@ -36,7 +37,7 @@ ElReboteASMB:
                 LSR R4, R4, #1
                  
                 LDR R6, [R9] // DELAY(Value)
-                CMP R0, R6
+                MOV R0, R6
                 BL Delay
 
                 CMP R4, #0b1
@@ -58,7 +59,7 @@ ElReboteASMB:
                 LSL R4, R4, #1
 
                 LDR R6, [R9] // DELAY(Value)
-                CMP R0, R6
+                MOV R0, R6
                 BL Delay
 
                 ADD R5, R5, #1
@@ -83,7 +84,7 @@ ElReboteASMB:
         BL LedOutput
 
         LDR R6, [R9] // DELAY(Value)
-        CMP R0, R6
+        MOV R0, R6
         BL Delay
 
         LDR R7, [R10] // QUIT(Value)
