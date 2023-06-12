@@ -1,5 +1,5 @@
 .text
-.global ELReboteASMB
+.global ElReboteASMB
 .global QUIT
 .global DELAY
 .global DELAY_3
@@ -8,7 +8,7 @@
 .global Delay
 .global Clear
 
-ELReboteASMB:
+ElReboteASMB:
     PUSH {R0,R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,LR}
     BL Clear
     LDR R11, =DELAY_3 // DELAY_3(Address)
