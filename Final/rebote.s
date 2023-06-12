@@ -1,9 +1,16 @@
 .text
 
-.global el_rebote_asm
+.global ElReboteASM
+.global QUIT
+.global DELAY
+.global DELAY_3
+.global DisplayBinary
+.global LedOutput
+.global Delay
+.global Clear
 
-el_rebote_asm:
-    PUSH {LR}                      // Guardar LR en la pila
+ElReboteASM:
+    PUSH {R0,R1,R2,R3,R4,R5,R6,LR}                      // Guardar LR en la pila
     BL Clear                       // Llamar a la función Clear
     LDR R0, =DELAY_3               // Cargar la dirección de memoria de DELAY_3 en R0
     LDR R1, [R0]                   // Cargar el valor de DELAY_3 en R1
@@ -17,7 +24,7 @@ loop_outer:
 
     MOV R3, #0x80                  // Inicializar DISPLAY con 0x80
 
-    mov r4, #7                     // Inicializar r con 7
+    MOV R4, #7                     // Inicializar r con 7
 
 loop_inner:
     CMP R4, #0                     // Comparar r con 0
@@ -49,3 +56,4 @@ exit_loop_inner:
     MOV R5, R3                     // Guardar el valor de DISPLAY en R5
     MOV R3, R3, LSL #1             // Desplazar lógicamente DISPLAY hacia la izquierda en 1 posición
     BL Delay                      
+    POP {R0,R1,R2,R3,R4,R5,R6,PC} 

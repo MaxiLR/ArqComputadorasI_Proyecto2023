@@ -1,22 +1,25 @@
-#include <pthread.h>
 #include "sequences.c"
+#include <pthread.h>
 
 extern void ElEspiralASMB();
+extern void ElReboteASMB();
 
-void *ElEspiralASMBP()
-{
+void *ElEspiralASMBP() {
   ElEspiralASMB();
   return NULL;
 }
 
-void App()
-{
+void *ElReboteASMBP() {
+  ElReboteASMB();
+  return NULL;
+}
+
+void App() {
   unsigned char option[1];
   Clear();
 
   int i = 0, a = 0;
-  for (i; i < 3; i++)
-  {
+  for (i; i < 3; i++) {
     Delay(2000);
     Clear();
     if (Login())
@@ -26,8 +29,7 @@ void App()
   if (i == 3)
     exit(0);
 
-  do
-  {
+  do {
     Delay(2000);
     DisplayBinary(0, 0);
     LedOutput(0);
@@ -46,15 +48,13 @@ void App()
 
     scanf("%s1", &option[0]);
 
-    if (option[1] != '\0')
-    {
+    if (option[1] != '\0') {
       option[0] = 'i';
     }
 
     printf("\033[?25l");
 
-    switch (option[0])
-    {
+    switch (option[0]) {
       pthread_t threads[2];
 
     case '1':
@@ -73,7 +73,7 @@ void App()
 
     case '3':
       pthread_create(&threads[0], NULL, KeyListener, NULL);
-      pthread_create(&threads[1], NULL, ElRebote, NULL);
+      pthread_create(&threads[1], NULL, ElReboteASMBP, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       break;
