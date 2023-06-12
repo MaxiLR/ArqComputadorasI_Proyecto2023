@@ -1,5 +1,5 @@
-#include <pthread.h>
 #include "sequences.c"
+#include <pthread.h>
 
 extern void ElEspiralASMB();
 extern void ElReboteASMB();
@@ -11,7 +11,7 @@ void *ElEspiralASMBP() {
 
 void *ElReboteASMBP() {
   ElReboteASMB();
-  return NULL
+  return NULL;
 }
 
 void App() {
@@ -73,7 +73,7 @@ void App() {
 
     case '3':
       pthread_create(&threads[0], NULL, KeyListener, NULL);
-      pthread_create(&threads[1], NULL, ElRebote, NULL);
+      pthread_create(&threads[1], NULL, ElReboteASMBP, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       break;

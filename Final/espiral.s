@@ -6,9 +6,11 @@
 .global DisplayBinary
 .global LedOutput
 .global Delay
+.global Clear
 
 ElEspiralASMB:
 	PUSH {R0,R4,R5,R6,R7,R8,R9,R10,R11,LR}
+	BL Clear
 	MOV R4, #0 // Init DISPLAY with 0
 	LDR R11, =DELAY_4 // DELAY_4(Address)
 	LDR R6, [R11] // DELAY_4(Value)
@@ -70,5 +72,6 @@ table: // #16
 	.byte 0x81
 	.byte 0x1
 	.byte 0x0
+	
 .end
 
