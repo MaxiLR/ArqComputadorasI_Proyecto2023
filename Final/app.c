@@ -1,14 +1,22 @@
 #include <pthread.h>
 #include "sequences.c"
 
-void *ElEspiralASMB();
+extern void ElEspiralASMB();
 
-void App() {
+void *ElEspiralASMBP()
+{
+  ElEspiralASMB();
+  return NULL;
+}
+
+void App()
+{
   unsigned char option[1];
   Clear();
 
   int i = 0, a = 0;
-  for (i; i < 3; i++) {
+  for (i; i < 3; i++)
+  {
     Delay(2000);
     Clear();
     if (Login())
@@ -18,7 +26,8 @@ void App() {
   if (i == 3)
     exit(0);
 
-  do {
+  do
+  {
     Delay(2000);
     DisplayBinary(0, 0);
     LedOutput(0);
@@ -37,13 +46,15 @@ void App() {
 
     scanf("%s1", &option[0]);
 
-    if (option[1] != '\0') {
+    if (option[1] != '\0')
+    {
       option[0] = 'i';
     }
 
     printf("\033[?25l");
 
-    switch (option[0]) {  
+    switch (option[0])
+    {
       pthread_t threads[2];
 
     case '1':
@@ -69,7 +80,7 @@ void App() {
 
     case '4':
       pthread_create(&threads[0], NULL, KeyListener, NULL);
-      pthread_create(&threads[1], NULL, ElEspiralASMB, NULL);
+      pthread_create(&threads[1], NULL, ElEspiralASMBP, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       break;
@@ -87,11 +98,10 @@ void App() {
       Clear();
       a = 1;
       break;
-      
+
     default:
       printf("\n\rIngrese una opcion valida\n\r");
       break;
     }
   } while (a == 0);
 }
-
