@@ -8,7 +8,7 @@
 .global Delay
 
 ElEspiralASMB:
-	PUSH {R4,R5,R6,R7,R8,R9,R10,R11,LR}
+	PUSH {R0,R4,R5,R6,R7,R8,R9,R10,R11,LR}
 	MOV R4, #0 // Init DISPLAY with 0
 	LDR R11, =DELAY_4 // DELAY_4(Address)
 	LDR R6, [R11] // DELAY_4(Value)
@@ -47,8 +47,9 @@ ElEspiralASMB:
 
 	break:
 	STR R6, [R11]
-	STR #0, [R10]
-	POP {R4,R5,R6,R7,R8,R9,R10,R11,PC}
+	MOV R0, #0
+	STR R0, [R10]
+	POP {R0,R4,R5,R6,R7,R8,R9,R10,R11,PC}
 		
 .data
 		
