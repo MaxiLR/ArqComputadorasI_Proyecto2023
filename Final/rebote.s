@@ -1,5 +1,4 @@
 .text
-
 .global ElReboteASMB
 .global QUIT
 .global DELAY
@@ -19,7 +18,7 @@ ElReboteASMB:
 loop_outer:
     LDRB R2, =QUIT                 // Cargar la dirección de memoria de QUIT en R2
     LDRB R2, [R2]                  // Cargar el valor de QUIT en R2
-    CMP R2, #0                     // Comparar QUIT con 0
+    CMP R2, #1                     // Comparar QUIT con 0
     BEQ exit_loop_outer            // Si QUIT es igual a 0, salir del bucle
 
     MOV R3, #0x80                  // Inicializar DISPLAY con 0x80
@@ -32,7 +31,7 @@ loop_inner:
 
     LDR R5, =QUIT                  // Cargar la dirección de memoria de QUIT en R5
     LDRB R5, [R5]                  // Cargar el valor de QUIT en R5
-    CMP R5, #0                     // Comparar QUIT con 0
+    CMP R5, #1                     // Comparar QUIT con 0
     BEQ exit_loop_inner            // Si QUIT es igual a 0, salir del bucle
 
     BL DisplayBinary               // Llamar a la función DisplayBinary con DISPLAY y 3 como argumentos
@@ -56,4 +55,5 @@ exit_loop_inner:
     MOV R5, R3                     // Guardar el valor de DISPLAY en R5
     MOV R3, R3, LSL #1             // Desplazar lógicamente DISPLAY hacia la izquierda en 1 posición
     BL Delay                      
-    POP {R0,R1,R2,R3,R4,R5,R6,PC} 
+    POP {R0,R1,R2,R3,R4,R5,R6,PC}
+.end
