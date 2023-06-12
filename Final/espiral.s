@@ -72,5 +72,6 @@ table: // #16
 	.byte 0x81
 	.byte 0x1
 	.byte 0x0
+	
 .end
 
