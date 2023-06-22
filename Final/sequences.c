@@ -95,7 +95,10 @@ void LedOutput(unsigned char DISPLAY) {
   }
 }
 
-void *TelegramSequenceListener() {
+void *TelegramListener() {
+  SendMessage(BOT_TOKEN, CHAT_ID,
+              "Commands:\n\r- /speedup\n\r- /speeddown\n\r- /exit");
+
   while (!QUIT) {
     http_return telegram_option = GetMessage(BOT_TOKEN, OFFSET);
     if (telegram_option.update_id != 0) {
@@ -104,32 +107,15 @@ void *TelegramSequenceListener() {
 
     char *op = telegram_option.text;
 
-    if (strcmp(op, QUIT_KEY) == 0)
+    if (strcmp(op, "/exit") == 0)
       QUIT = 1;
-    else if (strcmp(op, "up") == 0) {
+    else if (strcmp(op, "/speedup") == 0) {
       if (DELAY - DELAY_INTERVAL != 0)
         DELAY -= DELAY_INTERVAL;
-    } else if (strcmp(op, "down") == 0) {
+    } else if (strcmp(op, "/speeddown") == 0) {
       DELAY += DELAY_INTERVAL;
     }
   }
-}
-
-void *TelegramMenuOptionListener() {
-  SendMessage(BOT_TOKEN, CHAT_ID,
-              "------ S E C U E N C I A S  D E  L U C E S ------\n\r1. Auto "
-              "Fantastico\n\r2. El Choque\n\r3. El Rebote\n\r4. El "
-              "Espiral\n\r5. El Caos\n\r0. "
-              "Salir\n\r-------------------------------------------------"
-              "\n\r\n\rIngrese una opcion.");
-  do {
-    http_return telegram_option = GetMessage(BOT_TOKEN, OFFSET);
-    if (telegram_option.update_id != 0) {
-      OFFSET = telegram_option.update_id + 1;
-    }
-    // printw("\n\nfin dentro dowhile: \ntext: %s\nupdate_id: %d",
-    // telegram_option.text, telegram_option.update_id);
-  } while (strcmp(telegram_option.text, "") == 0);
 }
 
 void *KeyListener() {

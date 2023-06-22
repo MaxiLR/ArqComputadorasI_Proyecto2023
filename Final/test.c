@@ -22,6 +22,9 @@ void TelegramMenuOptionListener() {
     telegram_option = GetMessage(BOT_TOKEN, OFFSET);
   } while (telegram_option.update_id == lastUpdateID);
 
+  char *TelegramMenuOption = telegram_option.text;
+
+  printf("%s", TelegramMenuOption);
 }
 
 int main() { TelegramMenuOptionListener(); }
