@@ -1,9 +1,15 @@
+#include "httpget.c"
+#include "include/EasyPIO.h"
 #include <stdio.h>
-#include "EasyPIO.h"
 
 #define QUIT_KEY 'q'
 #define DELAY_INTERVAL 250
 #define DEFAULT_DELAY 1000
+
+#define BOT_TOKEN "6210586888:AAGU5lfXxmB7kqxDL6gTvINlwfUD0xanUqw"
+#define CHAT_ID "1544265357"
+
+unsigned int OFFSET = 0;
 
 unsigned int QUIT;
 size_t DELAY;
@@ -30,7 +36,6 @@ void MoveCursorToOrigin() {
 void Clear() {
   printf("\033[2J");
   MoveCursorToOrigin();
-
 }
 
 void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
@@ -48,7 +53,8 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
 
   switch (option) {
   case 1:
-    printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mAuto Fantastico\033[0m\n\r\n\r");
+    printf(
+        "\033[1;31mSECUENCIA:\033[0m \033[1;36mAuto Fantastico\033[0m\n\r\n\r");
     break;
   case 2:
     printf("\033[1;31mSECUENCIA:\033[0m \033[1;36mEl Choque\033[0m\n\r\n\r");
@@ -77,31 +83,67 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
 }
 
 void LedOutput(unsigned char DISPLAY) {
-    int i = 0;
+  int i = 0;
   for (unsigned int POINTER = 0x80; POINTER > 0; POINTER = POINTER >> 1) {
     if (POINTER & DISPLAY) {
-        digitalWrite(led[i], 1);
+      digitalWrite(led[i], 1);
       i++;
     } else {
-        digitalWrite(led[i], 0);
+      digitalWrite(led[i], 0);
       i++;
     }
   }
 }
 
-void *KeyListener() {
-    while (!QUIT) {
-        int key = getch();
-        if (key == QUIT_KEY)
-            QUIT = 1;
-        else if (key == KEY_UP) {
-            if (DELAY - DELAY_INTERVAL != 0)
-                DELAY -= DELAY_INTERVAL;
-        }
-        else if (key == KEY_DOWN) {
-            DELAY += DELAY_INTERVAL;
-        }
+void *TelegramSequenceListener() {
+  while (!QUIT) {
+    http_return telegram_option = GetMessage(BOT_TOKEN, OFFSET);
+    if (telegram_option.update_id != 0) {
+      OFFSET = telegram_option.update_id + 1;
     }
+
+    char *op = telegram_option.text;
+
+    if (strcmp(op, QUIT_KEY) == 0)
+      QUIT = 1;
+    else if (strcmp(op, "up") == 0) {
+      if (DELAY - DELAY_INTERVAL != 0)
+        DELAY -= DELAY_INTERVAL;
+    } else if (strcmp(op, "down") == 0) {
+      DELAY += DELAY_INTERVAL;
+    }
+  }
+}
+
+void *TelegramMenuOptionListener() {
+  SendMessage(BOT_TOKEN, CHAT_ID,
+              "------ S E C U E N C I A S  D E  L U C E S ------\n\r1. Auto "
+              "Fantastico\n\r2. El Choque\n\r3. El Rebote\n\r4. El "
+              "Espiral\n\r5. El Caos\n\r0. "
+              "Salir\n\r-------------------------------------------------"
+              "\n\r\n\rIngrese una opcion.");
+  do {
+    http_return telegram_option = GetMessage(BOT_TOKEN, OFFSET);
+    if (telegram_option.update_id != 0) {
+      OFFSET = telegram_option.update_id + 1;
+    }
+    // printw("\n\nfin dentro dowhile: \ntext: %s\nupdate_id: %d",
+    // telegram_option.text, telegram_option.update_id);
+  } while (strcmp(telegram_option.text, "") == 0);
+}
+
+void *KeyListener() {
+  while (!QUIT) {
+    int key = getch();
+    if (key == QUIT_KEY)
+      QUIT = 1;
+    else if (key == KEY_UP) {
+      if (DELAY - DELAY_INTERVAL != 0)
+        DELAY -= DELAY_INTERVAL;
+    } else if (key == KEY_DOWN) {
+      DELAY += DELAY_INTERVAL;
+    }
+  }
 }
 
 void *AutoFantastico() {
@@ -188,7 +230,8 @@ void *ElRebote() {
 void *ElEspiral() {
   Clear();
   DELAY = DELAY_4;
-  unsigned int table[] = {0x80, 0x81, 0xC1, 0xC3, 0xE3, 0xE7, 0xF7, 0xFF, 0xEF, 0xE7, 0xC7, 0xC3, 0x83, 0x81, 0x1, 0x0};
+  unsigned int table[] = {0x80, 0x81, 0xC1, 0xC3, 0xE3, 0xE7, 0xF7, 0xFF,
+                          0xEF, 0xE7, 0xC7, 0xC3, 0x83, 0x81, 0x1,  0x0};
   unsigned char DISPLAY = 0;
   while (!QUIT) {
 

@@ -48,6 +48,9 @@ void App() {
 
     scanf("%s1", &option[0]);
 
+
+    option[0] = telegram_option.text
+
     if (option[1] != '\0') {
       option[0] = 'i';
     }

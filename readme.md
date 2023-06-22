@@ -15,4 +15,4 @@ $ sudo apt install libcurl4-openssl-dev
 
 ```
 $ gcc espiral.s rebote.s main.c -o main -lpthread -lncurses -lcurl
-```
+``` 
