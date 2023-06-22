@@ -1,5 +1,5 @@
 #include "httpget.c"
-#include "include/EasyPIO.h"
+//#include "include/EasyPIO.h"
 #include <stdio.h>
 
 #define QUIT_KEY 'q'
@@ -83,6 +83,7 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
 }
 
 void LedOutput(unsigned char DISPLAY) {
+  /*
   int i = 0;
   for (unsigned int POINTER = 0x80; POINTER > 0; POINTER = POINTER >> 1) {
     if (POINTER & DISPLAY) {
@@ -93,11 +94,12 @@ void LedOutput(unsigned char DISPLAY) {
       i++;
     }
   }
+  */
 }
 
 void *TelegramListener() {
   SendMessage(BOT_TOKEN, CHAT_ID,
-              "Commands:\n\r- /speedup\n\r- /speeddown\n\r- /exit");
+              "¡SECUENCIA INICIADA!\n\n\rComandos:\n\r- /speedup\n\r- /speeddown\n\r- /exit");
 
   while (!QUIT) {
     http_return telegram_option = GetMessage(BOT_TOKEN, OFFSET);
@@ -155,7 +157,6 @@ void *AutoFantastico() {
     }
   }
   DELAY_1 = DELAY;
-  QUIT = 0;
 }
 
 void *ElChoque() {
@@ -177,7 +178,6 @@ void *ElChoque() {
     }
   }
   DELAY_2 = DELAY;
-  QUIT = 0;
 }
 
 void *ElRebote() {
@@ -210,7 +210,6 @@ void *ElRebote() {
     Delay(DELAY);
   }
   DELAY_3 = DELAY;
-  QUIT = 0;
 }
 
 void *ElEspiral() {
@@ -233,7 +232,6 @@ void *ElEspiral() {
     }
   }
   DELAY_4 = DELAY;
-  QUIT = 0;
 }
 
 void *ElCaos() {
@@ -278,5 +276,4 @@ void *ElCaos() {
     }
   }
   DELAY_5 = DELAY;
-  QUIT = 0;
 }

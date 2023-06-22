@@ -1,20 +1,20 @@
 #include "sequences.c"
 #include <pthread.h>
 
-extern void ElEspiralASMB();
-extern void ElReboteASMB();
+// extern void ElEspiralASMB();
+// extern void ElReboteASMB();
 
 char OPTION = 'O'; 
 
-void *ElEspiralASMBP() {
-  ElEspiralASMB();
-  return NULL;
-}
+// void *ElEspiralASMBP() {
+//   ElEspiralASMB();
+//   return NULL;
+// }
 
-void *ElReboteASMBP() {
-  ElReboteASMB();
-  return NULL;
-}
+// void *ElReboteASMBP() {
+//   ElReboteASMB();
+//   return NULL;
+// }
 
 void *ConsoleMenu(){
   printf("------ S E C U E N C I A S  D E  L U C E S ------\n\r");
@@ -50,7 +50,7 @@ void *TelegramMenu() {
   char *TelegramMenuOption = telegram_option.text;
 
   if (OPTION == 'O'){
-    OPTION == telegram_option.text[0];
+    OPTION = telegram_option.text[0];
   }
 
 }
@@ -70,6 +70,7 @@ void App() {
     exit(0);
 
   do {
+    OPTION = 'O';
     Delay(2000);
     DisplayBinary(0, 0);
     LedOutput(0);
@@ -81,6 +82,7 @@ void App() {
     pthread_create(&menuThreads[0], NULL, ConsoleMenu, NULL);
     pthread_create(&menuThreads[1], NULL, TelegramMenu, NULL);
     pthread_join(menuThreads[1], NULL);
+    pthread_cancel(menuThreads[0]);
 
     printf("\033[?25l");
 
@@ -88,48 +90,53 @@ void App() {
       pthread_t threads[3];
 
     case '1':
-      pthread_create(&threads[0], NULL, KeyListener, NULL);
-      pthread_create(&threads[1], NULL, AutoFantastico, NULL);
+      pthread_create(&threads[0], NULL, AutoFantastico, NULL);
+      pthread_create(&threads[1], NULL, KeyListener, NULL);
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       pthread_join(threads[2], NULL);
+      QUIT = 0;
       break;
 
     case '2':
-      pthread_create(&threads[0], NULL, KeyListener, NULL);
-      pthread_create(&threads[1], NULL, ElChoque, NULL);
+      pthread_create(&threads[0], NULL, ElChoque, NULL);
+      pthread_create(&threads[1], NULL, KeyListener, NULL);
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       pthread_join(threads[2], NULL);
+      QUIT = 0;
       break;
 
     case '3':
-      pthread_create(&threads[0], NULL, KeyListener, NULL);
-      pthread_create(&threads[1], NULL, ElReboteASMBP, NULL);
+      pthread_create(&threads[0], NULL, ElRebote, NULL);
+      pthread_create(&threads[1], NULL, KeyListener, NULL);
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       pthread_join(threads[2], NULL);
+      QUIT = 0;
       break;
 
     case '4':
-      pthread_create(&threads[0], NULL, KeyListener, NULL);
-      pthread_create(&threads[1], NULL, ElEspiralASMBP, NULL);
+      pthread_create(&threads[0], NULL, ElEspiral, NULL);
+      pthread_create(&threads[1], NULL, KeyListener, NULL);
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       pthread_join(threads[2], NULL);
+      QUIT = 0;
       break;
 
     case '5':
-      pthread_create(&threads[0], NULL, KeyListener, NULL);
-      pthread_create(&threads[1], NULL, ElCaos, NULL);
+      pthread_create(&threads[0], NULL, ElCaos, NULL);
+      pthread_create(&threads[1], NULL, KeyListener, NULL);
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
       pthread_join(threads[2], NULL);
+      QUIT = 0;
       break;
 
     case '0':
