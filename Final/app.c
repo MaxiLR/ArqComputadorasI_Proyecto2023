@@ -6,7 +6,9 @@ extern void ElChoqueASMB();
 extern void ElReboteASMB();
 extern void ElEspiralASMB();
 
-char OPTION = 'O';
+char OPTION;
+char TELEGRAM_OPTION = 'O';
+char CONSOLE_OPTION = 'O';
 
 void *AutoFantasticoASMBP() {
   AutoFantasticoASMB();
@@ -39,7 +41,7 @@ void *ConsoleMenu() {
   printf("-------------------------------------------------\n\r");
   printf("\n\rSeleccione una opcion: ");
 
-  OPTION = getchar();
+  CONSOLE_OPTION = getchar();
 }
 
 void *TelegramMenu() {
@@ -47,22 +49,19 @@ void *TelegramMenu() {
   int lastUpdateID = telegram_option.update_id;
 
   SendMessage(BOT_TOKEN, CHAT_ID,
-              "------ S E C U E N C I A S  D E  L U C E S ------\n\r1. Auto "
+              "S E C U E N C I A S  D E  L U C E S\n\r1. Auto "
               "Fantastico\n\r2. El Choque\n\r3. El Rebote\n\r4. El "
               "Espiral\n\r5. El Caos\n\r0. "
-              "Salir\n\r-------------------------------------------------------"
-              "-------");
+              "Salir\n\r");
   SendMessage(BOT_TOKEN, CHAT_ID, "Ingrese una opción");
 
   do {
     telegram_option = GetMessage(BOT_TOKEN, OFFSET);
-  } while (telegram_option.update_id == lastUpdateID && OPTION == 'O');
+  } while (telegram_option.update_id == lastUpdateID);
 
   char *TelegramMenuOption = telegram_option.text;
 
-  if (OPTION == 'O') {
-    OPTION = telegram_option.text[0];
-  }
+  TELEGRAM_OPTION = telegram_option.text[0];
 }
 
 void App() {
@@ -80,7 +79,8 @@ void App() {
     exit(0);
 
   do {
-    OPTION = 'O';
+    TELEGRAM_OPTION = 'O';
+    CONSOLE_OPTION = 'O';
     Delay(2000);
     DisplayBinary(0, 0);
     LedOutput(0);
@@ -91,8 +91,19 @@ void App() {
 
     pthread_create(&menuThreads[0], NULL, ConsoleMenu, NULL);
     pthread_create(&menuThreads[1], NULL, TelegramMenu, NULL);
-    pthread_join(menuThreads[1], NULL);
-    pthread_cancel(menuThreads[0]);
+    while (1) {
+      if (TELEGRAM_OPTION != 'O') {
+        pthread_cancel(menuThreads[0]);
+        OPTION = TELEGRAM_OPTION;
+        break;
+      } else {
+        if (CONSOLE_OPTION != 'O') {
+          pthread_cancel(menuThreads[1]);
+          OPTION = CONSOLE_OPTION;
+          break;
+        }
+      }
+    }
 
     printf("\033[?25l");
 
@@ -105,7 +116,7 @@ void App() {
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
-      pthread_join(threads[2], NULL);
+      pthread_cancel(threads[2]);
       QUIT = 0;
       break;
 
@@ -115,7 +126,7 @@ void App() {
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
-      pthread_join(threads[2], NULL);
+      pthread_cancel(threads[2]);
       QUIT = 0;
       break;
 
@@ -125,7 +136,7 @@ void App() {
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
-      pthread_join(threads[2], NULL);
+      pthread_cancel(threads[2]);
       QUIT = 0;
       break;
 
@@ -135,7 +146,7 @@ void App() {
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
-      pthread_join(threads[2], NULL);
+      pthread_cancel(threads[2]);
       QUIT = 0;
       break;
 
@@ -145,7 +156,7 @@ void App() {
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
       pthread_join(threads[1], NULL);
-      pthread_join(threads[2], NULL);
+      pthread_cancel(threads[2]);
       QUIT = 0;
       break;
 
