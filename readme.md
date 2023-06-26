@@ -20,7 +20,7 @@ $ sudo apt install libcurl4-openssl-dev
 $ gcc main.c include/cJSON.c -o main -lpthread -lncurses -lcurl
 ```
 
-### Compilación Raspbian (Raspberry-Test)
+### Compilación Raspbian (Raspberry)
 
 ```
 $ gcc espiral.s rebote.s choque.s autofantastico.s main.c include/cJSON.c -o main -lpthread -lncurses -lcurl
