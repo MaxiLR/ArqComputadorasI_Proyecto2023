@@ -23,7 +23,7 @@ $ gcc main.c include/cJSON.c -o main -lpthread -lncurses -lcurl
 ### Compilación Raspbian (Raspberry)
 
 ```
-$ gcc espiral.s rebote.s choque.s autofantastico.s main.c include/cJSON.c -o main -lpthread -lncurses -lcurl
+$ gcc assembly/espiral.s assembly/rebote.s assembly/choque.s assembly/autofantastico.s main.c include/cJSON.c -o main -lpthread -lncurses -lcurl
 ```
 
 ### Bot Token
