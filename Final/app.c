@@ -1,32 +1,32 @@
 #include "sequences.c"
 #include <pthread.h>
 
-// extern void AutoFantasticoASMB();
-// extern void ElChoqueASMB();
-// extern void ElReboteASMB();
-// extern void ElEspiralASMB();
+extern void AutoFantasticoASMB();
+extern void ElChoqueASMB();
+extern void ElReboteASMB();
+extern void ElEspiralASMB();
 
 char OPTION = 'O';
 
-// void *AutoFantasticoASMBP() {
-//   AutoFantasticoASMB();
-//   return NULL;
-// }
+void *AutoFantasticoASMBP() {
+  AutoFantasticoASMB();
+  return NULL;
+}
 
-// void *ElChoqueASMBP() {
-//   ElChoqueASMB();
-//   return NULL;
-// }
+void *ElChoqueASMBP() {
+  ElChoqueASMB();
+  return NULL;
+}
 
-// void *ElReboteASMBP() {
-//   ElReboteASMB();
-//   return NULL;
-// }
+void *ElReboteASMBP() {
+  ElReboteASMB();
+  return NULL;
+}
 
-// void *ElEspiralASMBP() {
-//   ElEspiralASMB();
-//   return NULL;
-// }
+void *ElEspiralASMBP() {
+  ElEspiralASMB();
+  return NULL;
+}
 
 void *ConsoleMenu() {
   printf("------ S E C U E N C I A S  D E  L U C E S ------\n\r");
@@ -100,7 +100,7 @@ void App() {
       pthread_t threads[3];
 
     case '1':
-      pthread_create(&threads[0], NULL, AutoFantastico, NULL);
+      pthread_create(&threads[0], NULL, AutoFantasticoASMBP, NULL);
       pthread_create(&threads[1], NULL, KeyListener, NULL);
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
@@ -110,7 +110,7 @@ void App() {
       break;
 
     case '2':
-      pthread_create(&threads[0], NULL, ElChoque, NULL);
+      pthread_create(&threads[0], NULL, ElChoqueASMBP, NULL);
       pthread_create(&threads[1], NULL, KeyListener, NULL);
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
@@ -120,7 +120,7 @@ void App() {
       break;
 
     case '3':
-      pthread_create(&threads[0], NULL, ElRebote, NULL);
+      pthread_create(&threads[0], NULL, ElReboteASMBP, NULL);
       pthread_create(&threads[1], NULL, KeyListener, NULL);
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
@@ -130,7 +130,7 @@ void App() {
       break;
 
     case '4':
-      pthread_create(&threads[0], NULL, ElEspiral, NULL);
+      pthread_create(&threads[0], NULL, ElEspiralASMBP, NULL);
       pthread_create(&threads[1], NULL, KeyListener, NULL);
       pthread_create(&threads[2], NULL, TelegramListener, NULL);
       pthread_join(threads[0], NULL);
