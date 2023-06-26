@@ -14,5 +14,5 @@ $ sudo apt install libcurl4-openssl-dev
 ### Compilación Linux/Raspbian
 
 ```
-$ gcc espiral.s rebote.s main.c -o main -lpthread -lncurses -lcurl
+$ gcc espiral.s rebote.s choque.s autofantastico.s main.c include/cJSON.c -o main -lpthread -lncurses -lcurl
 ``` 

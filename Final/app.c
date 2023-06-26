@@ -1,13 +1,20 @@
 #include "sequences.c"
 #include <pthread.h>
 
-// extern void ElEspiralASMB();
+// extern void AutoFantasticoASMB();
+// extern void ElChoqueASMB();
 // extern void ElReboteASMB();
+// extern void ElEspiralASMB();
 
-char OPTION = 'O'; 
+char OPTION = 'O';
 
-// void *ElEspiralASMBP() {
-//   ElEspiralASMB();
+// void *AutoFantasticoASMBP() {
+//   AutoFantasticoASMB();
+//   return NULL;
+// }
+
+// void *ElChoqueASMBP() {
+//   ElChoqueASMB();
 //   return NULL;
 // }
 
@@ -16,7 +23,12 @@ char OPTION = 'O';
 //   return NULL;
 // }
 
-void *ConsoleMenu(){
+// void *ElEspiralASMBP() {
+//   ElEspiralASMB();
+//   return NULL;
+// }
+
+void *ConsoleMenu() {
   printf("------ S E C U E N C I A S  D E  L U C E S ------\n\r");
   printf("1. Auto Fantastico\n\r");
   printf("2. El Choque\n\r");
@@ -28,7 +40,6 @@ void *ConsoleMenu(){
   printf("\n\rSeleccione una opcion: ");
 
   OPTION = getchar();
-
 }
 
 void *TelegramMenu() {
@@ -49,10 +60,9 @@ void *TelegramMenu() {
 
   char *TelegramMenuOption = telegram_option.text;
 
-  if (OPTION == 'O'){
+  if (OPTION == 'O') {
     OPTION = telegram_option.text[0];
   }
-
 }
 
 void App() {
