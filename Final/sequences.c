@@ -1,5 +1,5 @@
 #include "httpget.c"
-//#include "include/EasyPIO.h"
+#include "include/EasyPIO.h"
 #include <stdio.h>
 
 #define QUIT_KEY 'q'
@@ -83,7 +83,6 @@ void DisplayBinary(unsigned char DISPLAY, unsigned int option) {
 }
 
 void LedOutput(unsigned char DISPLAY) {
-  /*
   int i = 0;
   for (unsigned int POINTER = 0x80; POINTER > 0; POINTER = POINTER >> 1) {
     if (POINTER & DISPLAY) {
@@ -94,7 +93,6 @@ void LedOutput(unsigned char DISPLAY) {
       i++;
     }
   }
-  */
 }
 
 void *TelegramListener() {
