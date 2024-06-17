@@ -12,16 +12,16 @@
 unsigned int OFFSET = 0;
 
 unsigned int QUIT;
-size_t DELAY;
-size_t DELAY_1 = DEFAULT_DELAY;
-size_t DELAY_2 = DEFAULT_DELAY;
-size_t DELAY_3 = DEFAULT_DELAY;
-size_t DELAY_4 = DEFAULT_DELAY;
-size_t DELAY_5 = DEFAULT_DELAY;
+int DELAY;
+int DELAY_1 = DEFAULT_DELAY;
+int DELAY_2 = DEFAULT_DELAY;
+int DELAY_3 = DEFAULT_DELAY;
+int DELAY_4 = DEFAULT_DELAY;
+int DELAY_5 = DEFAULT_DELAY;
 
 char led[8] = {7, 8, 25, 24, 23, 18, 15, 14};
 
-void Delay(size_t a) {
+void Delay(int a) {
   a = a * 100000;
   while (a--)
     ;
